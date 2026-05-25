@@ -29,50 +29,42 @@ To implement MESSAGE AUTHENTICATION CODE(MAC)
 #include <stdio.h>
 #include <string.h>
 
-#define MAC_SIZE 32 // Define MAC size in bytes
+#define MAC_SIZE 32
 
-// Function to compute a simple MAC using XOR
 void computeMAC(const char *key, const char *message, char *mac) {
     int key_len = strlen(key);
     int msg_len = strlen(message);
     
-    // XOR the key and message, repeating if necessary
     for (int i = 0; i < MAC_SIZE; i++) {
-        mac[i] = key[i % key_len] ^ message[i % msg_len]; // Simple XOR operation
+        mac[i] = key[i % key_len] ^ message[i % msg_len];
     }
-    mac[MAC_SIZE] = '\0'; // Null-terminate the MAC string
+    mac[MAC_SIZE] = '\0';
 }
 
 int main() {
     char key[100], message[100];
-    char mac[MAC_SIZE + 1]; // Buffer for MAC (+1 for null terminator)
-    char receivedMAC[MAC_SIZE + 1]; // Buffer for input of received MAC
+    char mac[MAC_SIZE + 1];
+    char receivedMAC[MAC_SIZE + 1];
 
-    // Step 1: Input secret key
     printf("Enter the secret key: ");
     scanf("%s", key);
 
-    // Step 2: Input the message
     printf("Enter the message: ");
     scanf("%s", message);
 
-    // Step 3: Compute the MAC
     computeMAC(key, message, mac);
 
-    // Step 4: Display the computed MAC in hexadecimal
     printf("Computed MAC (in hex): ");
     for (int i = 0; i < MAC_SIZE; i++) {
-        printf("%02x", (unsigned char)mac[i]); // Print each byte as hex
+        printf("%02x", (unsigned char)mac[i]);
     }
     printf("\n");
 
-    // Step 5: Input the received MAC (for verification)
     printf("Enter the received MAC (as hex): ");
     for (int i = 0; i < MAC_SIZE; i++) {
         scanf("%02hhx", &receivedMAC[i]);
     }
 
-    // Compare the computed MAC with the received MAC
     if (memcmp(mac, receivedMAC, MAC_SIZE) == 0) {
         printf("MAC verification successful. Message is authentic.\n");
     } else {
@@ -85,9 +77,8 @@ int main() {
 
 
 ## Output:
-<img width="1734" height="932" alt="Screenshot 2025-11-14 141850" src="https://github.com/user-attachments/assets/f7b2764b-ee7a-48b4-81da-d32fec9d7ff1" />
 
-<img width="831" height="483" alt="Screenshot 2025-11-14 141909" src="https://github.com/user-attachments/assets/137d8898-86e0-45e8-9d30-0db44963f63a" />
+<img width="1743" height="989" alt="Screenshot 2026-05-25 135419" src="https://github.com/user-attachments/assets/6b457d62-723d-4b16-bc73-0eecce016feb" />
 
 ## Result:
 The program is executed successfully.
